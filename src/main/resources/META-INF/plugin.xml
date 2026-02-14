@@ -1,0 +1,39 @@
+<idea-plugin>
+    <id>com.claudecode.notifications</id>
+    <name>Claude Code Notifications</name>
+    <version>1.0.0</version>
+    <vendor>Claude Code Community</vendor>
+
+    <description><![CDATA[
+        Receive IDE balloon and macOS system notifications from Claude Code CLI events.
+        <br/>
+        Uses Claude Code's hook system to detect when Claude asks questions, completes tasks, or encounters errors.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.claudecode.notifications.settings.ClaudeCodeSettingsConfigurable"
+                id="com.claudecode.notifications.settings"
+                displayName="Claude Code Notifications"/>
+
+        <notificationGroup
+                id="ClaudeCodeNotifications"
+                displayType="BALLOON"
+                toolWindowId="Terminal"/>
+
+        <postStartupActivity
+                implementation="com.claudecode.notifications.startup.ClaudeCodeStartupActivity"/>
+    </extensions>
+
+    <actions>
+        <action id="ClaudeCode.InstallHooks"
+                class="com.claudecode.notifications.actions.InstallHooksAction"
+                text="Install Claude Code Hooks"
+                description="Install or update Claude Code notification hooks">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
